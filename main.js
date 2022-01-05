@@ -37,7 +37,30 @@ client.on("messageCreate", (message) => {
     //converts contents into array of strings removing the prefix
     const args = message.content.toLowerCase().substr(PREFIX.length).split(" ");
 
+    //METHOD 4
+    //secret dev commands
+    switch (args[0]) {
+        case "sd":
+            console.log("Shutting Down!");
+            client.destroy();
+            exit();
+    }
+
+    let parameters = {};
+    switch (args[0]) {
+        default:
+            parameters = {"message": message, "args": args};
+    }
+    const cmd = client.commands.get(args[0]);
+    if (cmd !== undefined) {
+        cmd.execute(parameters);
+    }
+    else {
+        message.channel.send("[INSERT ERROR MESSAGE HERE]");
+    }
+
     //executing command (METHOD #1)
+    /*
     switch (args[0]) {
         case "help":
             message.channel.send( {embeds: [helpMenu]} );
@@ -54,6 +77,7 @@ client.on("messageCreate", (message) => {
         default:
             message.channel.send("[INSERT ERROR MESSAGE HERE]");
     }
+    */
 
 
 
